@@ -1,0 +1,72 @@
+//
+//  HHRotateView.h
+//  HHRotateView
+//
+//  Created by 豫风 on 2019/6/11.
+//  Copyright © 2019 豫风. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "HHRotateViewCell.h"
+#import "HHSupplementViewLayout.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+typedef NS_ENUM(NSUInteger, HHRotateViewStyle) {
+    HHRotateViewHorizonal,
+    HHRotateViewVertical,
+};
+
+@class HHRotateView;
+@protocol HHRotateViewDelegate <NSObject>
+
+@optional
+- (void)didSelectCell:(HHRotateViewCell *)cell index:(NSInteger)index;
+- (void)rotateView:(HHRotateView *)rotateView didScrollAtIndex:(NSInteger)index;
+
+@end
+@protocol HHRotateViewDataSrouce <NSObject>
+
+/* must to implementation */
+- (NSInteger)numberOfRowsInRotateView:(HHRotateView *)rotateView;
+
+/* must to implementation call `dequeueReusableCellWithIdentifier` */
+- (__kindof HHRotateViewCell *)rotateView:(HHRotateView *)rotateView cellForRowAtIndex:(NSInteger)index;
+
+@optional
+
+/* return a View like UIPageControl need to conform `HHRotateViewDelegate` */
+- (__kindof UIView <HHRotateViewDelegate>*)viewForSupplementaryView:(HHRotateView *)rotateView;
+/* return a layout object */
+- (HHSupplementViewLayout *)layoutForSupplementaryView;
+
+@end
+
+/**
+ a custom carousel, all method invoke just like using tableView, support reuse cell
+ 
+ detail to see the demo
+ */
+@interface HHRotateView : UIView
+
+@property (nonatomic, assign) BOOL dragEnable;//default YES
+@property (nonatomic, assign) BOOL shouldAutoScroll;//default YES
+@property (nonatomic, assign) CGFloat timeInterval; //auto scroll time
+@property (nonatomic, weak) id<HHRotateViewDelegate>delegate;
+@property (nonatomic, weak) id<HHRotateViewDataSrouce>dataSource;
+
+/** init method  */
+- (instancetype)initWithFrame:(CGRect)frame style:(HHRotateViewStyle)style;
+
+/** must to register cell class */
+- (void)registerClass:(Class)cellClass identifier:(NSString *)identifier;
+
+/** need to dequeue cell class, support reuse cell */
+- (__kindof HHRotateViewCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier index:(NSInteger)index;
+
+/** reload cell it will call dataSource method */
+- (void)reloadData;
+
+@end
+
+NS_ASSUME_NONNULL_END
