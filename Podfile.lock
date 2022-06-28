@@ -1,0 +1,16 @@
+PODS:
+  - HHCommon (1.0.0)
+
+DEPENDENCIES:
+  - HHCommon
+
+SPEC REPOS:
+  trunk:
+    - HHCommon
+
+SPEC CHECKSUMS:
+  HHCommon: 04ac990e694035faf0973600e7faa83212711705
+
+PODFILE CHECKSUM: 3fbc07758dd1ad603cf8adfde8920fe0d2feec95
+
+COCOAPODS: 1.11.3

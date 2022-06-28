@@ -25,16 +25,14 @@
     return self;
 }
 
-- (void)configInitialInfo
-{
+- (void)configInitialInfo {
     self.titleLabel = [UILabel new];
     [self addSubview:self.titleLabel];
     self.titleLabel.text = @"我在测试";
     self.titleLabel.cent_.on_();
 }
 
-- (void)updateTitleWithIndex:(NSInteger)index
-{
+- (void)updateTitleWithIndex:(NSInteger)index {
     self.titleLabel.text = [NSString stringWithFormat:@"我是第%ld个cell",index];
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "HHSupplymentView.h"
-#import "UIView+HHLayout.h"
+#import "HHCommon.h"
 
 @interface HHSupplymentView ()
 
@@ -33,23 +33,23 @@
         if (self.style == HHSupplymentViewDot) {
             pageView.layer.cornerRadius = 2.5;
             pageView.clipsToBounds = YES;
-            pageView.size_.constList(@(5),@(5),nil).on_();
+            pageView.size_.offsets_(@(5),@(5),nil).on_();
         } else if (self.style == HHSupplymentViewBar) {
             pageView.layer.cornerRadius = 1.5;
             pageView.clipsToBounds = YES;
-            pageView.size_.constList(@(12),@(3),nil).on_();
+            pageView.size_.offsets_(@(12),@(3),nil).on_();
         }
         if (i == 0) {
             pageView.backgroundColor = self.currentColor;
-            pageView.left_.top_.bott_.centY.equalTo(self).on_();
+            pageView.left_.top_.bott_.centY_.equalTo(self).on_();
         } else if (i == self.numberOfPages-1){
             pageView.backgroundColor = self.normalColor;
-            pageView.left_.centY.equalTo(lastView.righ_)
+            pageView.left_.centY_.equalTo(lastView.righ_)
             .offset_(self.margin?:5).on_();
             pageView.righ_.equalTo(self).on_();
         } else {
             pageView.backgroundColor = self.normalColor;
-            pageView.left_.centY.equalTo(lastView.righ_)
+            pageView.left_.centY_.equalTo(lastView.righ_)
             .offset_(self.margin?:5).on_();
         }
         lastView = pageView;

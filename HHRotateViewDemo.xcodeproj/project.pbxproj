@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,16 +13,16 @@
 		5006CFAA22B0E9D0002A43BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5006CFA922B0E9D0002A43BC /* Assets.xcassets */; };
 		5006CFAD22B0E9D0002A43BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5006CFAB22B0E9D0002A43BC /* LaunchScreen.storyboard */; };
 		5006CFB022B0E9D0002A43BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006CFAF22B0E9D0002A43BC /* main.m */; };
-		5006CFC322B0EA6B002A43BC /* UIView+HHLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006CFBA22B0EA6B002A43BC /* UIView+HHLayout.m */; };
-		5006CFC422B0EA6B002A43BC /* HHSafeTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006CFBB22B0EA6B002A43BC /* HHSafeTimer.m */; };
 		5006CFC522B0EA6B002A43BC /* HHRotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006CFBD22B0EA6B002A43BC /* HHRotateView.m */; };
 		5006CFC622B0EA6B002A43BC /* HHRotateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006CFBF22B0EA6B002A43BC /* HHRotateViewCell.m */; };
 		5006CFC722B0EA6B002A43BC /* HHSupplementViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006CFC222B0EA6B002A43BC /* HHSupplementViewLayout.m */; };
 		5006CFE122B117CD002A43BC /* HHRotateViewNormal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006CFE022B117CD002A43BC /* HHRotateViewNormal.m */; };
+		A3BFE75BE063794ECAD85D23 /* Pods_HHRotateViewDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D29D0EBD324C22B686FB397 /* Pods_HHRotateViewDemo.framework */; };
 		FE2E61E8286AD12200228627 /* HHSupplymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2E61E7286AD12200228627 /* HHSupplymentView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D29D0EBD324C22B686FB397 /* Pods_HHRotateViewDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HHRotateViewDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5006CF9D22B0E9CF002A43BC /* HHRotateViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HHRotateViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5006CFA022B0E9CF002A43BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5006CFA122B0E9CF002A43BC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -33,18 +33,16 @@
 		5006CFAC22B0E9D0002A43BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5006CFAE22B0E9D0002A43BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5006CFAF22B0E9D0002A43BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5006CFB922B0EA6B002A43BC /* UIView+HHLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HHLayout.h"; sourceTree = "<group>"; };
-		5006CFBA22B0EA6B002A43BC /* UIView+HHLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HHLayout.m"; sourceTree = "<group>"; };
-		5006CFBB22B0EA6B002A43BC /* HHSafeTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSafeTimer.m; sourceTree = "<group>"; };
 		5006CFBC22B0EA6B002A43BC /* HHRotateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHRotateView.h; sourceTree = "<group>"; };
 		5006CFBD22B0EA6B002A43BC /* HHRotateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHRotateView.m; sourceTree = "<group>"; };
 		5006CFBE22B0EA6B002A43BC /* HHRotateViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHRotateViewCell.h; sourceTree = "<group>"; };
 		5006CFBF22B0EA6B002A43BC /* HHRotateViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHRotateViewCell.m; sourceTree = "<group>"; };
-		5006CFC022B0EA6B002A43BC /* HHSafeTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSafeTimer.h; sourceTree = "<group>"; };
 		5006CFC122B0EA6B002A43BC /* HHSupplementViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSupplementViewLayout.h; sourceTree = "<group>"; };
 		5006CFC222B0EA6B002A43BC /* HHSupplementViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSupplementViewLayout.m; sourceTree = "<group>"; };
 		5006CFDF22B117CC002A43BC /* HHRotateViewNormal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHRotateViewNormal.h; sourceTree = "<group>"; };
 		5006CFE022B117CD002A43BC /* HHRotateViewNormal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHRotateViewNormal.m; sourceTree = "<group>"; };
+		DAA25337AF714ED73D5C7485 /* Pods-HHRotateViewDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHRotateViewDemo.release.xcconfig"; path = "Target Support Files/Pods-HHRotateViewDemo/Pods-HHRotateViewDemo.release.xcconfig"; sourceTree = "<group>"; };
+		F29E08F0C79AA0AB663BF80F /* Pods-HHRotateViewDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHRotateViewDemo.debug.xcconfig"; path = "Target Support Files/Pods-HHRotateViewDemo/Pods-HHRotateViewDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		FE2E61E6286AD12200228627 /* HHSupplymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSupplymentView.h; sourceTree = "<group>"; };
 		FE2E61E7286AD12200228627 /* HHSupplymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSupplymentView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -54,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3BFE75BE063794ECAD85D23 /* Pods_HHRotateViewDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +65,8 @@
 				5006CFB822B0EA11002A43BC /* HHRotateView */,
 				5006CF9F22B0E9CF002A43BC /* HHRotateViewDemo */,
 				5006CF9E22B0E9CF002A43BC /* Products */,
+				AF7FCAACB0BB4FFE356D4981 /* Pods */,
+				61F495AFAB8F8C3C3D2A76D0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,12 +107,25 @@
 				FE2E61E7286AD12200228627 /* HHSupplymentView.m */,
 				5006CFC122B0EA6B002A43BC /* HHSupplementViewLayout.h */,
 				5006CFC222B0EA6B002A43BC /* HHSupplementViewLayout.m */,
-				5006CFB922B0EA6B002A43BC /* UIView+HHLayout.h */,
-				5006CFBA22B0EA6B002A43BC /* UIView+HHLayout.m */,
-				5006CFC022B0EA6B002A43BC /* HHSafeTimer.h */,
-				5006CFBB22B0EA6B002A43BC /* HHSafeTimer.m */,
 			);
 			path = HHRotateView;
+			sourceTree = "<group>";
+		};
+		61F495AFAB8F8C3C3D2A76D0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D29D0EBD324C22B686FB397 /* Pods_HHRotateViewDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AF7FCAACB0BB4FFE356D4981 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F29E08F0C79AA0AB663BF80F /* Pods-HHRotateViewDemo.debug.xcconfig */,
+				DAA25337AF714ED73D5C7485 /* Pods-HHRotateViewDemo.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,9 +135,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5006CFB322B0E9D0002A43BC /* Build configuration list for PBXNativeTarget "HHRotateViewDemo" */;
 			buildPhases = (
+				BCA49EEE10D137731E029AA8 /* [CP] Check Pods Manifest.lock */,
 				5006CF9922B0E9CF002A43BC /* Sources */,
 				5006CF9A22B0E9CF002A43BC /* Frameworks */,
 				5006CF9B22B0E9CF002A43BC /* Resources */,
+				573FEC93952CBB500EBFAA2C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -179,6 +195,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		573FEC93952CBB500EBFAA2C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HHRotateViewDemo/Pods-HHRotateViewDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HHRotateViewDemo/Pods-HHRotateViewDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HHRotateViewDemo/Pods-HHRotateViewDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BCA49EEE10D137731E029AA8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HHRotateViewDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5006CF9922B0E9CF002A43BC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -190,8 +248,6 @@
 				5006CFC522B0EA6B002A43BC /* HHRotateView.m in Sources */,
 				5006CFE122B117CD002A43BC /* HHRotateViewNormal.m in Sources */,
 				5006CFB022B0E9D0002A43BC /* main.m in Sources */,
-				5006CFC422B0EA6B002A43BC /* HHSafeTimer.m in Sources */,
-				5006CFC322B0EA6B002A43BC /* UIView+HHLayout.m in Sources */,
 				5006CFA222B0E9CF002A43BC /* AppDelegate.m in Sources */,
 				5006CFC622B0EA6B002A43BC /* HHRotateViewCell.m in Sources */,
 			);
@@ -335,6 +391,7 @@
 		};
 		5006CFB422B0E9D0002A43BC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F29E08F0C79AA0AB663BF80F /* Pods-HHRotateViewDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -353,6 +410,7 @@
 		};
 		5006CFB522B0E9D0002A43BC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DAA25337AF714ED73D5C7485 /* Pods-HHRotateViewDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

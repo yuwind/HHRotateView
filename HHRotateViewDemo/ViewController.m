@@ -8,9 +8,9 @@
 
 #import "ViewController.h"
 #import "HHRotateView.h"
-#import "UIView+HHLayout.h"
 #import "HHRotateViewNormal.h"
 #import "HHSupplymentView.h"
+#import "HHCommon.h"
 
 @interface ViewController ()<HHRotateViewDelegate,HHRotateViewDataSrouce>
 
@@ -53,32 +53,26 @@
     return cell;
 }
 
-- (UIView<HHRotateViewDelegate> *)viewForSupplementaryView:(HHRotateView *)rotateView
-{
-    static BOOL isInitial = NO;
+- (UIView<HHRotateViewDelegate> *)viewForSupplementaryView:(HHRotateView *)rotateView {
+    BOOL isInitial = (rotateView == self.rotateView);
     HHSupplymentView *supplyView = HHSupplymentView.new;
     supplyView.numberOfPages = 5;
-    supplyView.style = isInitial?HHSupplymentViewDot:HHSupplymentViewBar;
+    supplyView.style = isInitial?HHSupplymentViewBar:HHSupplymentViewDot;
     supplyView.currentColor = [UIColor whiteColor];
     supplyView.normalColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-    isInitial = YES;
     return supplyView;
 }
 
-- (HHSupplementViewLayout *)layoutForSupplementaryView
-{
+- (HHSupplementViewLayout *)layoutForSupplementaryView {
     return HHSupplementViewLayout.new.bottom(-10).centX(0);
 }
 
-- (void)didSelectCell:(HHRotateViewCell *)cell index:(NSInteger)index
-{
+- (void)didSelectCell:(HHRotateViewCell *)cell index:(NSInteger)index {
     NSLog(@"点击了第%ld个cell",index);
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.rotateView reloadData];
 }
-
 
 @end

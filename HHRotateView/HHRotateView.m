@@ -7,8 +7,7 @@
 //
 
 #import "HHRotateView.h"
-#import "UIView+HHLayout.h"
-#import "HHSafeTimer.h"
+#import "HHCommon.h"
 
 typedef NS_ENUM(NSUInteger, HHScrollDirection) {
     HHScrollDirectionNone,
@@ -73,19 +72,19 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
     [_scrollView addSubview:_rightView];
     
     if (self.style == HHRotateViewHorizonal) {
-        _leftView.top_.left_.bott_.widt_.centY
+        _leftView.top_.left_.bott_.widt_.centY_
         .equalTo(_scrollView).on_();
-        _middleView.left_.top_.bott_.widt_.centY
+        _middleView.left_.top_.bott_.widt_.centY_
         .equalTo(_leftView.righ_).on_();
-        _rightView.left_.top_.bott_.widt_.centY
+        _rightView.left_.top_.bott_.widt_.centY_
         .equalTo(_middleView.righ_).on_();
         _rightView.righ_.equalTo(_scrollView).on_();
     } else if (self.style == HHRotateViewVertical) {
-        _leftView.top_.left_.righ_.heit_.centX
+        _leftView.top_.left_.righ_.heit_.centX_
         .equalTo(_scrollView).on_();
-        _middleView.top_.left_.righ_.heit_.centX
+        _middleView.top_.left_.righ_.heit_.centX_
         .equalTo(_leftView.bott_).on_();
-        _rightView.top_.left_.righ_.heit_.centX
+        _rightView.top_.left_.righ_.heit_.centX_
         .equalTo(_middleView.bott_).on_();
         _rightView.bott_.equalTo(_scrollView).on_();
     }
@@ -102,7 +101,8 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 - (void)startTimerAction {
     [self.safeTimer invalidate];
     self.safeTimer = nil;
-    self.safeTimer = [[HHSafeTimer alloc] initWithInterval:self.timeInterval target:self selector:@selector(timerDidFireAction) count:-1];
+    self.safeTimer = [[HHSafeTimer alloc] initWithInterval:self.timeInterval target:self selector:@selector(timerDidFireAction)];
+    [self.safeTimer startWithDate:[NSDate dateWithTimeIntervalSinceNow:self.timeInterval]];
 }
 
 - (void)setTimeInterval:(CGFloat)timeInterval {
@@ -144,7 +144,6 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 }
 
 - (void)reloadData {
-    [self layoutIfNeeded];
     self.currentIndex = 0;
     self.isRightAdd = NO;
     self.isLeftAdd = NO;
@@ -163,7 +162,7 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
             [obj removeFromSuperview];
         }];
         HHRotateViewCell *cell = [self.dataSource rotateView:self cellForRowAtIndex:0];
-        [_middleView addSubview:cell];
+        [self.middleView addSubview:cell];
         cell.around_();
     }
     if (self.totalRows <= 1) {
@@ -183,12 +182,14 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
                         [self configSupplymentViewWith:layout];
                     }
                 } else {
-                    self.supplymentView.bott_.centX
+                    self.supplymentView.bott_.centX_
                     .equalTo(self).offset_(-5).on_();
                 }
             }
         }
     }
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -216,7 +217,7 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
     if (self.style == HHRotateViewHorizonal) {
         offset = scrollView.contentOffset.x;
         self.direction = offset > self.width ? HHScrollDirectionLeft : offset < self.width ? HHScrollDirectionRight : HHScrollDirectionNone;
-    } else if(self.style == HHRotateViewVertical) {
+    } else if (self.style == HHRotateViewVertical) {
         offset = scrollView.contentOffset.y;
         self.direction = offset > self.height ? HHScrollDirectionLeft : offset < self.height ? HHScrollDirectionRight : HHScrollDirectionNone;
     }
