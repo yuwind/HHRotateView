@@ -170,6 +170,9 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
         [self.middleView addSubview:cell];
         cell.around_();
     }
+    if ([self.delegate respondsToSelector:@selector(rotateView:didScrollAtIndex:)]) {
+        [self.delegate rotateView:self didScrollAtIndex:0];
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -212,6 +215,7 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
             if (self.nextIndex < 0) {
                 self.nextIndex = self.totalRows - 1;
             }
+            self.nextIndex = MAX(0, self.nextIndex);
             [self.leftView.subviews.firstObject removeFromSuperview];
             HHRotateViewCell *cell = [self.dataSource rotateView:self cellForRowAtIndex:self.nextIndex];
             [cell layoutIfNeeded];

@@ -67,6 +67,9 @@
 }
 
 - (void)setCurrentPage:(NSInteger)currentPage {
+    if (currentPage >= self.numberOfPages) {
+        return;
+    }
     if (self.pageArrayM.count > currentPage) {
         self.pageArrayM[_currentPage].backgroundColor = self.normalColor;
         self.pageArrayM[currentPage].backgroundColor = self.currentColor;
