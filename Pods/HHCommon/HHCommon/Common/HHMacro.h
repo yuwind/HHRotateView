@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define mIsLargeThan4Inch (mScreenWidth >= 375)
 #define mAdapter(value) ((value) * MIN(mScreenWidth, mScreenHeight) / 375.0f)
 
-#define mSystemSafeAreaInsets    mSafeAreaInsets(UIApplication.sharedApplication.keyWindow)
+#define mSystemSafeAreaInsets    mSafeAreaInsets(UIApplication.sharedApplication.delegate.window)
 #define mSafeAreaInsets(view) ({UIEdgeInsets i; if(@available(iOS 11.0, *)) {i = view.safeAreaInsets;} else {i = UIEdgeInsetsMake(20, 0, 0, 0);} i;})
 
 #define mIsIphoneX \

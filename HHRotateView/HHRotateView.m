@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 @interface HHRotateView ()<UIScrollViewDelegate>
 
 @property (nonatomic, assign) HHRotateViewStyle style;
-@property (nonatomic, strong) NSMutableDictionary *dictM;
+@property (nonatomic, strong) NSMutableDictionary *cellDictM;
 @property (nonatomic, strong) NSMutableDictionary *reuseDictM;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -31,30 +31,31 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 @property (nonatomic, assign) BOOL isLeftAdd;
 @property (nonatomic, assign) BOOL isRightAdd;
 @property (nonatomic, strong) HHSafeTimer *safeTimer;
-@property (nonatomic, strong) UIView<HHRotateViewDelegate> *supplymentView;
+@property (nonatomic, assign) CGRect scrollFrame;
 
 @end
 
 @implementation HHRotateView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    return [self initWithFrame:frame style:HHRotateViewHorizonal];
+}
 
 - (instancetype)initWithFrame:(CGRect)frame style:(HHRotateViewStyle)style {
     if (self = [super initWithFrame:frame]) {
         self.style = style;
         [self configInitialInfo];
         [self startAutoScrollAction];
+        [self firstAutoReloadData];
     }
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    return [self initWithFrame:frame style:HHRotateViewHorizonal];
-}
-
 - (void)configInitialInfo {
-    _timeInterval = 3;
+    _timeInterval = 5;
     _dragEnable = YES;
     _shouldAutoScroll = YES;
-    _dictM = [NSMutableDictionary dictionary];
+    _cellDictM = [NSMutableDictionary dictionary];
     _reuseDictM = [NSMutableDictionary dictionary];
     _scrollView = [UIScrollView new];
     _scrollView.delegate = self;
@@ -90,15 +91,22 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
     }
 }
 
-- (void)setAutoScroll:(BOOL)autoScroll {
-    [self stopTimerAction];
+- (void)firstAutoReloadData {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self reloadData];
+    });
 }
 
 - (void)startAutoScrollAction {
-    [self startTimerAction];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self startTimerActionIfNeeded];
+    });
 }
 
-- (void)startTimerAction {
+- (void)startTimerActionIfNeeded {
+    if (self.shouldAutoScroll == NO) {
+        return;
+    }
     [self.safeTimer invalidate];
     self.safeTimer = nil;
     self.safeTimer = [[HHSafeTimer alloc] initWithInterval:self.timeInterval target:self selector:@selector(timerDidFireAction)];
@@ -107,7 +115,6 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 
 - (void)setTimeInterval:(CGFloat)timeInterval {
     _timeInterval = timeInterval;
-    [self startTimerAction];
 }
 
 - (void)setDragEnable:(BOOL)dragEnable {
@@ -121,14 +128,14 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 }
 
 - (void)registerClass:(Class)cellClass identifier:(NSString *)identifier {
-    [self.dictM setValue:cellClass forKey:identifier];
+    [self.cellDictM setValue:cellClass forKey:identifier];
 }
 
 - (HHRotateViewCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier index:(NSInteger)index {
     HHRotateViewCell *cell = [self.reuseDictM objectForKey:identifier];
     cell.index = index;
-    if (!cell) {
-        Class cellClass = [self.dictM objectForKey:identifier];
+    if (cell == nil) {
+        Class cellClass = [self.cellDictM objectForKey:identifier];
         cell = [[cellClass alloc] initWithFrame:self.scrollView.bounds];
         cell.identifier = identifier;
         cell.index = index;
@@ -147,7 +154,7 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
     self.currentIndex = 0;
     self.isRightAdd = NO;
     self.isLeftAdd = NO;
-    [self startTimerAction];
+    [self startTimerActionIfNeeded];
     [self.reuseDictM removeAllObjects];
     if (self.style == HHRotateViewHorizonal) {
         [self.scrollView setContentOffset:CGPointMake(self.scrollView.width, 0) animated:NO];
@@ -158,38 +165,11 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
         self.totalRows = [self.dataSource numberOfRowsInRotateView:self];
     }
     if (self.totalRows > 0 && [self.dataSource respondsToSelector:@selector(rotateView:cellForRowAtIndex:)]) {
-        [self.middleView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj removeFromSuperview];
-        }];
+        [self.middleView.subviews.firstObject removeFromSuperview];
         HHRotateViewCell *cell = [self.dataSource rotateView:self cellForRowAtIndex:0];
         [self.middleView addSubview:cell];
         cell.around_();
     }
-    if (self.totalRows <= 1) {
-        [self stopTimerAction];
-        self.scrollView.scrollEnabled = NO;
-        [self.supplymentView removeFromSuperview];
-    } else {
-        if ([self.dataSource respondsToSelector:@selector(viewForSupplementaryView:)]) {
-            UIView <HHRotateViewDelegate>*supplyView = [self.dataSource viewForSupplementaryView:self];
-            if (supplyView) {
-                [self.supplymentView removeFromSuperview];
-                self.supplymentView = supplyView;
-                [self addSubview:self.supplymentView];
-                if ([self.dataSource respondsToSelector:@selector(layoutForSupplementaryView)]) {
-                    HHSupplementViewLayout *layout = [self.dataSource layoutForSupplementaryView];
-                    if (layout) {
-                        [self configSupplymentViewWith:layout];
-                    }
-                } else {
-                    self.supplymentView.bott_.centX_
-                    .equalTo(self).offset_(-5).on_();
-                }
-            }
-        }
-    }
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -197,7 +177,7 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self startTimerAction];
+    [self startTimerActionIfNeeded];
 }
 
 - (void)timerDidFireAction {
@@ -213,6 +193,9 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (!CGRectEqualToRect(scrollView.frame, self.scrollFrame)) {
+        return;
+    }
     CGFloat offset = 0;
     if (self.style == HHRotateViewHorizonal) {
         offset = scrollView.contentOffset.x;
@@ -229,13 +212,11 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
             if (self.nextIndex < 0) {
                 self.nextIndex = self.totalRows - 1;
             }
+            [self.leftView.subviews.firstObject removeFromSuperview];
             HHRotateViewCell *cell = [self.dataSource rotateView:self cellForRowAtIndex:self.nextIndex];
-            [self.leftView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [obj removeFromSuperview];
-            }];
+            [cell layoutIfNeeded];
             [self.leftView addSubview:cell];
             cell.around_();
-            [self.leftView layoutIfNeeded];
         }
         if (self.style == HHRotateViewHorizonal) {
             if (self.scrollView.contentOffset.x <= 0) {
@@ -251,13 +232,11 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
             self.isRightAdd = YES;
             self.isLeftAdd = NO;
             self.nextIndex = (self.currentIndex + 1) % self.totalRows;
+            [self.rightView.subviews.firstObject removeFromSuperview];
             HHRotateViewCell *cell = [self.dataSource rotateView:self cellForRowAtIndex:self.nextIndex];
-            [self.rightView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [obj removeFromSuperview];
-            }];
+            [cell layoutIfNeeded];
             [self.rightView addSubview:cell];
             cell.around_();
-            [self.rightView layoutIfNeeded];
         }
         if (self.style == HHRotateViewHorizonal) {
             if (self.scrollView.contentOffset.x >= self.scrollView.width * 2) {
@@ -274,83 +253,37 @@ typedef NS_ENUM(NSUInteger, HHScrollDirection) {
 - (void)changeToCenterAction:(HHScrollDirection)direction {
     HHRotateViewCell *cell = self.middleView.subviews.firstObject;
     [cell removeFromSuperview];
-    [self.reuseDictM setValue:cell forKey:cell.identifier];
+    if (cell != nil) {
+        [self.reuseDictM setValue:cell forKey:cell.identifier ?: @""];
+    }
     if (direction == HHScrollDirectionRight) {
         HHRotateViewCell *leftCell = self.leftView.subviews.firstObject;
+        [leftCell removeFromSuperview];
         [self.middleView addSubview:leftCell];
         leftCell.around_();
         self.isLeftAdd = NO;
     } else if (direction == HHScrollDirectionLeft){
         HHRotateViewCell *rightCell = self.rightView.subviews.firstObject;
+        [rightCell removeFromSuperview];
         [self.middleView addSubview:rightCell];
         rightCell.around_();
         self.isRightAdd = NO;
     }
-    [self.middleView layoutIfNeeded];
     self.currentIndex = self.nextIndex;
     if (self.style == HHRotateViewHorizonal) {
         self.scrollView.contentOffset = CGPointMake(self.scrollView.width, 0);
     } else if (self.style == HHRotateViewVertical){
         self.scrollView.contentOffset = CGPointMake(0, self.scrollView.height);
     }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(rotateView:didScrollAtIndex:)]) {
+    if ([self.delegate respondsToSelector:@selector(rotateView:didScrollAtIndex:)]) {
         [self.delegate rotateView:self didScrollAtIndex:self.currentIndex];
-    }
-    if (self.supplymentView && [self.supplymentView respondsToSelector:@selector(rotateView:didScrollAtIndex:)]) {
-        [self.supplymentView rotateView:self didScrollAtIndex:self.currentIndex];
     }
 }
 
-- (void)configSupplymentViewWith:(HHSupplementViewLayout *)layout {
-    self.supplymentView.translatesAutoresizingMaskIntoConstraints = NO;
-    for (int i = 0; i < layout.relationArray.count; i++) {
-        NSInteger relation = [layout.relationArray[i] integerValue];
-        CGFloat constant = [layout.constArray[i] floatValue];
-        switch (relation) {
-            case NSLayoutAttributeLeft: {
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.supplymentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:constant];
-                [self addConstraint:constraint];
-            }
-                break;
-            case NSLayoutAttributeRight: {
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.supplymentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:constant];
-                [self addConstraint:constraint];
-            }
-                break;
-            case NSLayoutAttributeTop: {
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.supplymentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:constant];
-                [self addConstraint:constraint];
-            }
-                break;
-            case NSLayoutAttributeBottom: {
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.supplymentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:constant];
-                [self addConstraint:constraint];
-            }
-                break;
-            case NSLayoutAttributeWidth: {
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.supplymentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:constant];
-                [self.supplymentView addConstraint:constraint];
-            }
-                break;
-            case NSLayoutAttributeHeight: {
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.supplymentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:constant];
-                [self.supplymentView addConstraint:constraint];
-            }
-                break;
-            case NSLayoutAttributeCenterX: {
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.supplymentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:constant];
-                [self addConstraint:constraint];
-            }
-                break;
-            case NSLayoutAttributeCenterY: {
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.supplymentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:constant];
-                [self addConstraint:constraint];
-            }
-                break;
-            default:
-                break;
-        }
-    }
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.scrollFrame = self.scrollView.frame;
+    [self.scrollView setContentOffset:CGPointMake(self.scrollView.width, 0)];
 }
 
 @end

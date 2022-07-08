@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "HHRotateViewCell.h"
-#import "HHSupplementViewLayout.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,13 +32,6 @@ typedef NS_ENUM(NSUInteger, HHRotateViewStyle) {
 /* must to implementation call `dequeueReusableCellWithIdentifier` */
 - (__kindof HHRotateViewCell *)rotateView:(HHRotateView *)rotateView cellForRowAtIndex:(NSInteger)index;
 
-@optional
-
-/* return a View like UIPageControl need to conform `HHRotateViewDelegate` */
-- (__kindof UIView <HHRotateViewDelegate>*)viewForSupplementaryView:(HHRotateView *)rotateView;
-/* return a layout object */
-- (HHSupplementViewLayout *)layoutForSupplementaryView;
-
 @end
 
 /**
@@ -51,7 +43,9 @@ typedef NS_ENUM(NSUInteger, HHRotateViewStyle) {
 
 @property (nonatomic, assign) BOOL dragEnable;//default YES
 @property (nonatomic, assign) BOOL shouldAutoScroll;//default YES
-@property (nonatomic, assign) CGFloat timeInterval; //auto scroll time
+@property (nonatomic, assign) CGFloat timeInterval; //auto scroll time default 5s
+@property (nonatomic, assign, readonly) NSInteger currentIndex;
+
 @property (nonatomic, weak) id<HHRotateViewDelegate>delegate;
 @property (nonatomic, weak) id<HHRotateViewDataSrouce>dataSource;
 

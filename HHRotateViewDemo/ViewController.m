@@ -15,7 +15,7 @@
 @interface ViewController ()<HHRotateViewDelegate,HHRotateViewDataSrouce>
 
 @property (nonatomic, strong) HHRotateView *rotateView;
-@property (nonatomic, strong) HHRotateView *verticalRotateView;
+@property (nonatomic, strong) HHSupplymentView *supplyView;
 
 @end
 
@@ -26,20 +26,21 @@
     
     self.rotateView = [[HHRotateView alloc] initWithFrame:CGRectZero style:HHRotateViewHorizonal];
     [self.view addSubview:self.rotateView];
-    self.rotateView.heightTop_(CGRectMake(0, 20, 0, 150));
+    
+    self.rotateView.heightTop_(CGRectMake(0, mStatusBarHeight+10, 0, 150));
     [self.rotateView registerClass:HHRotateViewNormal.class identifier:@"HHRotateViewNormal"];
     self.rotateView.dataSource = self;
     self.rotateView.delegate = self;
-    self.rotateView.dragEnable = YES;
-    [self.rotateView reloadData];
     
-    self.verticalRotateView = [[HHRotateView alloc] initWithFrame:CGRectZero style:HHRotateViewVertical];
-    [self.view addSubview:self.verticalRotateView];
-    self.verticalRotateView.heightTop_(CGRectMake(0, 200, 0, 150));
-    [self.verticalRotateView registerClass:HHRotateViewNormal.class identifier:@"HHRotateViewNormal"];
-    self.verticalRotateView.dataSource = self;
-    self.verticalRotateView.delegate = self;
-    [self.verticalRotateView reloadData];
+    HHSupplymentView *supplyView = HHSupplymentView.new;
+    [self.rotateView addSubview:supplyView];
+    self.supplyView = supplyView;
+    supplyView.numberOfPages = 5;
+    supplyView.style = HHSupplymentViewBar;
+    supplyView.currentColor = [UIColor whiteColor];
+    supplyView.normalColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    supplyView.bott_.offset_(-10).on_();
+    supplyView.centX_.on_();
 }
 
 - (NSInteger)numberOfRowsInRotateView:(HHRotateView *)rotateView {
@@ -53,22 +54,12 @@
     return cell;
 }
 
-- (UIView<HHRotateViewDelegate> *)viewForSupplementaryView:(HHRotateView *)rotateView {
-    BOOL isInitial = (rotateView == self.rotateView);
-    HHSupplymentView *supplyView = HHSupplymentView.new;
-    supplyView.numberOfPages = 5;
-    supplyView.style = isInitial?HHSupplymentViewBar:HHSupplymentViewDot;
-    supplyView.currentColor = [UIColor whiteColor];
-    supplyView.normalColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-    return supplyView;
-}
-
-- (HHSupplementViewLayout *)layoutForSupplementaryView {
-    return HHSupplementViewLayout.new.bottom(-10).centX(0);
-}
-
 - (void)didSelectCell:(HHRotateViewCell *)cell index:(NSInteger)index {
     NSLog(@"点击了第%ld个cell",index);
+}
+
+- (void)rotateView:(HHRotateView *)rotateView didScrollAtIndex:(NSInteger)index {
+    self.supplyView.currentPage = index;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

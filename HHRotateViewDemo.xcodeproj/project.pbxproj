@@ -85,6 +85,10 @@
 				5006CFA122B0E9CF002A43BC /* AppDelegate.m */,
 				5006CFA322B0E9CF002A43BC /* ViewController.h */,
 				5006CFA422B0E9CF002A43BC /* ViewController.m */,
+				FE2E61E6286AD12200228627 /* HHSupplymentView.h */,
+				FE2E61E7286AD12200228627 /* HHSupplymentView.m */,
+				5006CFC122B0EA6B002A43BC /* HHSupplementViewLayout.h */,
+				5006CFC222B0EA6B002A43BC /* HHSupplementViewLayout.m */,
 				5006CFDF22B117CC002A43BC /* HHRotateViewNormal.h */,
 				5006CFE022B117CD002A43BC /* HHRotateViewNormal.m */,
 				5006CFA622B0E9CF002A43BC /* Main.storyboard */,
@@ -103,10 +107,6 @@
 				5006CFBD22B0EA6B002A43BC /* HHRotateView.m */,
 				5006CFBE22B0EA6B002A43BC /* HHRotateViewCell.h */,
 				5006CFBF22B0EA6B002A43BC /* HHRotateViewCell.m */,
-				FE2E61E6286AD12200228627 /* HHSupplymentView.h */,
-				FE2E61E7286AD12200228627 /* HHSupplymentView.m */,
-				5006CFC122B0EA6B002A43BC /* HHSupplementViewLayout.h */,
-				5006CFC222B0EA6B002A43BC /* HHSupplementViewLayout.m */,
 			);
 			path = HHRotateView;
 			sourceTree = "<group>";
